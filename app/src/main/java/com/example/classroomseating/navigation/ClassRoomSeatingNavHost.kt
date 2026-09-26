@@ -33,6 +33,9 @@ fun ClassRoomSeatingNavHost(importViewModel: ImportViewModel) {
                 onClassClick = { classId ->
                     navController.navigate(ClassroomEditorRoute(classId))
                 },
+                onOpenSeatingPlan = { classId ->
+                    navController.navigate(SeatingPlanRoute(classId))
+                },
                 onScanQr = {
                     navController.navigate(QrScanRoute())
                 },

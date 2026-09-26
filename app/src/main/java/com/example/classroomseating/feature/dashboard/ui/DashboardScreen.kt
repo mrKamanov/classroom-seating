@@ -21,6 +21,7 @@ import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.EventSeat
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.AlertDialog
@@ -58,6 +59,7 @@ import java.util.Calendar
 @Composable
 fun DashboardScreen(
     onClassClick: (String) -> Unit,
+    onOpenSeatingPlan: (String) -> Unit,
     onScanQr: () -> Unit,
     onQrImagePicked: (Uri) -> Unit,
     onOpenInstructions: () -> Unit,
@@ -146,6 +148,7 @@ fun DashboardScreen(
                     ClassCard(
                         item = item,
                         onClick = { onClassClick(item.schoolClass.id) },
+                        onOpenSeatingPlan = { onOpenSeatingPlan(item.schoolClass.id) },
                         onEdit = { editingClass = item.schoolClass },
                         onDelete = { deletingClass = item.schoolClass }
                     )
@@ -212,6 +215,7 @@ fun DashboardScreen(
 private fun ClassCard(
     item: ClassListItem,
     onClick: () -> Unit,
+    onOpenSeatingPlan: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
@@ -232,6 +236,9 @@ private fun ClassCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+            IconButton(onClick = onOpenSeatingPlan) {
+                Icon(Icons.Filled.EventSeat, contentDescription = "Рассадка класса")
             }
             IconButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = "Редактировать класс")
