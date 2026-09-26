@@ -1,5 +1,6 @@
 package com.example.classroomseating.feature.instructions.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Add
@@ -40,8 +42,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+
+private const val PRIVACY_POLICY_URL =
+    "https://github.com/mrKamanov/classroom-seating/blob/master/PRIVACY.md"
+private const val LICENSE_URL =
+    "https://github.com/mrKamanov/classroom-seating/blob/master/LICENSE"
 
 /**
  * Экран «Инструкция». Подробное пошаговое руководство для пользователя.
@@ -49,6 +57,8 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstructionsScreen(onBack: () -> Unit) {
+    val uriHandler = LocalUriHandler.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -148,7 +158,74 @@ fun InstructionsScreen(onBack: () -> Unit) {
             BulletCard(text = "При загрузке журнала «Моя школа» отчество в имени ученика автоматически отбрасывается.")
             BulletCard(text = "Если вы проверили список и учеников «не найдено» — выберите файл формата .xlsx (не .xls, не .csv).")
             BulletCard(text = "Один и тот же класс нельзя создать дважды с одинаковым названием — при импорте приложение предложит заменить или создать копию.")
+
+            SectionTitle("О приложении")
+            AboutCard(
+                onOpenPrivacyPolicy = { uriHandler.openUri(PRIVACY_POLICY_URL) },
+                onOpenLicense = { uriHandler.openUri(LICENSE_URL) }
+            )
         }
+    }
+}
+
+@Composable
+private fun AboutCard(
+    onOpenPrivacyPolicy: () -> Unit,
+    onOpenLicense: () -> Unit
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Автор",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "Сергей Каманов",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "Приложение работает полностью офлайн: данные хранятся только " +
+                    "на вашем устройстве и никуда не отправляются.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            HorizontalDivider()
+
+            LinkRow(text = "Политика конфиденциальности", onClick = onOpenPrivacyPolicy)
+            LinkRow(text = "Лицензия (All Rights Reserved)", onClick = onOpenLicense)
+        }
+    }
+}
+
+@Composable
+private fun LinkRow(text: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+            contentDescription = null,
+            modifier = Modifier.size(20.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(Modifier.width(12.dp))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 

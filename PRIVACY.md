@@ -133,7 +133,7 @@ ML Kit Barcode и др.) исключительно для своей работ
 Разработчик может обновлять настоящую политику по мере развития приложения.
 Актуальная версия всегда размещена в этом файле в репозитории:
 
-https://github.com/mrKamanov/classroom-seating/blob/main/PRIVACY.md
+https://github.com/mrKamanov/classroom-seating/blob/master/PRIVACY.md
 
 Продолжая использовать приложение, вы подтверждаете согласие с действующей
 редакцией политики.
