@@ -23,12 +23,5 @@ bin/
 gen/
 out/
 
-# RuStore: секреты и бинарники (скрипты и docs из pepk/ — в репозитории)
-/pepk/release.keystore
-/pepk/keystore.properties
-/pepk/keystore-pass.txt
-/pepk/encryption-key.txt
-/pepk/pepk_out.zip
-/pepk/upload_certificate.pem
-/pepk/pepk.jar
-/pepk/*.pem
+# RuStore: папка с ключами, pepk.jar и релизными артефактами — только локально
+/pepk/
